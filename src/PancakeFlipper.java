@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -7,26 +8,63 @@ import java.util.Scanner;
  */
 public class PancakeFlipper {
 
-    private boolean[] pancakeStatus;
+    private ArrayList<Boolean> pancakeStatus;
 
-    public PancakeFlipper(boolean[] pancakeStatus) {
+    public PancakeFlipper(ArrayList<Boolean> pancakeStatus) {
         this.pancakeStatus = pancakeStatus;
+        howManyFlips();
+    }
+
+    private int howManyFlips() {
+        checkBottom();
+        boolean changeOrientation = this.pancakeStatus.get(0);
+        int counter = 0;
+        for (int i = 0; i < this.pancakeStatus.size(); i++) {
+            if (this.pancakeStatus.get(i) != changeOrientation) {
+                counter++;
+                changeOrientation = !changeOrientation;
+            }
+        }
+        return counter;
+    }
+
+    private void checkBottom() {
+        for (int i = this.pancakeStatus.size()-1; i >= 0; i--) {
+            if (!this.pancakeStatus.get(i)) {
+                break;
+            }
+            this.pancakeStatus.remove(i);
+        }
     }
 
     public static void main(String[] args) {
+        String s = "++-++++---";
+        ArrayList<Boolean> pancakeStatus = new ArrayList<Boolean>();
+        for (int j = 0; j < s.length(); j++) {
+            String temp = s.substring(j, j+1);
+            if (temp.equals("+")) {
+                pancakeStatus.add(true);
+            } else if (temp.equals("-")) {
+                pancakeStatus.add(false);
+            }
+            PancakeFlipper l = new PancakeFlipper(pancakeStatus);
+        }
+    }
+
+    /*public static void main(String[] args) {
         File input = new File("B-small-practice.in");
         try {
             Scanner sc = new Scanner(input);
             int testCases = sc.nextInt();
             for (int i = 0; i < testCases; i++) {
                 String s = sc.nextLine();
-                boolean[] pancakeStatus = new boolean[s.length()];
+                ArrayList<Boolean> pancakeStatus = new ArrayList<Boolean>();
                 for (int j = 0; j < s.length(); j++) {
                     String temp = s.substring(j, j+1);
                     if (temp.equals("+")) {
-                        pancakeStatus[j] = true;
+                        pancakeStatus.add(true);
                     } else if (temp.equals("-")) {
-                        pancakeStatus[j] = false;
+                        pancakeStatus.add(false);
                     }
                     PancakeFlipper l = new PancakeFlipper(pancakeStatus);
                 }
@@ -34,5 +72,5 @@ public class PancakeFlipper {
         } catch (FileNotFoundException a) {
             System.out.println("File not found.");
         }
-    }
+    }*/
 }
