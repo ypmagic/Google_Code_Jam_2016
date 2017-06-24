@@ -12,7 +12,6 @@ public class PancakeFlipper {
 
     public PancakeFlipper(ArrayList<Boolean> pancakeStatus) {
         this.pancakeStatus = pancakeStatus;
-        howManyFlips();
     }
 
     private int howManyFlips() {
@@ -42,13 +41,15 @@ public class PancakeFlipper {
         ArrayList<Boolean> pancakeStatus = new ArrayList<Boolean>();
         for (int j = 0; j < s.length(); j++) {
             String temp = s.substring(j, j+1);
+            System.out.println(temp);
             if (temp.equals("+")) {
                 pancakeStatus.add(true);
             } else if (temp.equals("-")) {
                 pancakeStatus.add(false);
             }
-            PancakeFlipper l = new PancakeFlipper(pancakeStatus);
         }
+        PancakeFlipper l = new PancakeFlipper(pancakeStatus);
+        System.out.println(l.howManyFlips());
     }
 
     /*public static void main(String[] args) {
